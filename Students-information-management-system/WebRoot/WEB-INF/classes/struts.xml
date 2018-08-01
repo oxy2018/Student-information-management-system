@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<constant name="struts.locale" value="zh_CN" />
+<constant name="struts.ui.theme" value="simple"></constant>
+<constant name="struts.i18n.encoding" value="gbk"></constant>
+  <package name="interceptor" extends="struts-default">
+  	
+	<interceptors>
+		<interceptor name="loginInter" class="com.student.util.LoginInterceptor"></interceptor>
+			<interceptor-stack name="myStack">
+	       		<interceptor-ref name="defaultStack"></interceptor-ref>
+	       		<interceptor-ref name="loginInter"></interceptor-ref>
+	       </interceptor-stack>
+	 </interceptors>
+	 
+	  <default-interceptor-ref name="myStack"></default-interceptor-ref>
+	  
+	  <global-results>
+	     	<result name="deny">/login.jsp</result>
+	  </global-results>      
+	  
+	</package> 
+	<package name="login" extends="struts-default">
+		<action name="login" class="userAction" >
+			<result name="error">/login.jsp</result>
+			<result name="success">/index.html</result>
+		</action>
+	</package> 
+	<package name="all" extends="interceptor" namespace="/">
+		
+		<action name="logout" class="userAction" method="logout">
+			<result name="success">/login.jsp</result>
+		</action>
+		<action name="showalluser" class="userAction" method="showalluser">
+			<result name="success">/showalluser.jsp</result>
+		</action>
+		<action name="register" class="userAction" method="register">
+			<result >/login.jsp</result>
+		</action>	
+		<action name="deleteUser" class="userAction" method="deleteUser">
+			<result name="success">/showalluser.jsp</result>
+		</action>
+		<action name="updataUser" class="userAction" method="updataUser">
+			<result name="success">/showalluser.jsp</result>
+		</action>
+		<action name="addUser" class="userAction" method="addUser">
+			<result name="success">/showalluser.jsp</result>
+			<result name="input">/adduser.jsp</result>
+		</action>
+		<action name="showAllStudent" class="studentAction" method="showAllStudent">
+			<result name="success">/ShowAllStudent.jsp</result>
+		</action>
+		<action name="updataStudent" class="studentAction" method="updataStudent">
+			<result type="redirectAction">showAllStudent</result>
+			<!-- <result>/ShowAllStudent.jsp</result> -->
+		</action>
+		<action name="deleteStudent" class="studentAction" method="deleteStudent">
+			<result name="success">/ShowAllStudent.jsp</result>
+		</action>
+		<action name="addStudent" class="studentAction" method="addS">
+			<result type="redirectAction">showAllStudent</result>  
+			<!-- <result >/ShowAllStudent.jsp</result> -->
+		</action>
+		<action name="selectStudent" class="studentAction" method="selectStudent">
+			<result name="success">/selectstudent.jsp</result>
+		</action>
+		
+	</package>
+</struts>    
